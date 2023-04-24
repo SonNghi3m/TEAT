@@ -1,5 +1,6 @@
 package g45_lexicon.teat.model.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
@@ -8,6 +9,7 @@ import javax.validation.constraints.Size;
 import java.util.List;
 
 @Data
+@AllArgsConstructor
 public class AttachmentDto {
     private Integer id;
     @NotEmpty(message = "fileName should not empty")

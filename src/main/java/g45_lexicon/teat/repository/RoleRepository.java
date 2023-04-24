@@ -1,7 +1,11 @@
 package g45_lexicon.teat.repository;
 
-import g45_lexicon.teat.model.entity.Attachment;
+import g45_lexicon.teat.model.entity.Role;
 import org.springframework.data.repository.CrudRepository;
 
-public interface RoleRepository extends CrudRepository<Attachment, Integer> {
+import java.util.List;
+
+public interface RoleRepository extends CrudRepository<Role, Integer> {
+    List<Role> findAllByOrOrderByIdDesc();
+
 }

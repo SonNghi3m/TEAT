@@ -1,7 +1,11 @@
 package g45_lexicon.teat.repository;
 
-import g45_lexicon.teat.model.entity.Attachment;
+import g45_lexicon.teat.model.entity.Event;
 import org.springframework.data.repository.CrudRepository;
 
-public interface EventRepository extends CrudRepository<Attachment, Integer> {
+import java.util.List;
+
+public interface EventRepository extends CrudRepository<Event, Integer> {
+    List<Event> findAllByOrOrderByIdDesc();
+
 }

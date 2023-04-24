@@ -1,7 +1,11 @@
 package g45_lexicon.teat.repository;
 
-import g45_lexicon.teat.model.entity.Attachment;
+import g45_lexicon.teat.model.entity.Permission;
 import org.springframework.data.repository.CrudRepository;
 
-public interface PermissionRepository extends CrudRepository<Attachment, Integer> {
+import java.util.List;
+
+public interface PermissionRepository extends CrudRepository<Permission, Integer> {
+    List<Permission> findAllByOrOrderByIdDesc();
+
 }
