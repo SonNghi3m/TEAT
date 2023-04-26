@@ -34,29 +34,29 @@ public class AttachmentServiceImpl implements AttachmentService{
     }
 
     @Override
-    public AttachmentDto create(AttachmentDto obj) {
-        if (obj == null) throw new IllegalArgumentException("Attachment was null");
-        if (obj.getId() != 0) throw new IllegalArgumentException("Attachment id should be null or zero");
-        if (attachmentRepository.existsById(obj.getId())) throw new DataDuplicateException("Attachment already existed");
-        Attachment createdEntity = attachmentRepository.save(modelMapper.map(obj, Attachment.class));
+    public AttachmentDto create(AttachmentDto attachmentDto) {
+        if (attachmentDto == null) throw new IllegalArgumentException("Attachment was null");
+        if (attachmentDto.getId() != 0) throw new IllegalArgumentException("Attachment id should be null or zero");
+        if (attachmentRepository.existsById(attachmentDto.getId())) throw new DataDuplicateException("Attachment already existed");
+        Attachment createdEntity = attachmentRepository.save(modelMapper.map(attachmentDto, Attachment.class));
         return modelMapper.map(createdEntity, AttachmentDto.class);
     }
 
     @Override
-    public void update(AttachmentDto obj) {
-        if (obj == null) throw new IllegalArgumentException("Attachment data was null");
-        if (obj.getId() == 0) throw new IllegalArgumentException("Attachment id should not be zero");
-        if (!attachmentRepository.findById(obj.getId()).isPresent())
-            throw new DataNotFoundException("data not found error");
-        if (attachmentRepository.findByFileName(obj.getFileName()).isPresent())
-            throw new DataDuplicateException("duplicate fileName error");
-        attachmentRepository.save(modelMapper.map(obj, Attachment.class));
+    public void update(AttachmentDto attachmentDto) {
+        if (attachmentDto == null) throw new IllegalArgumentException("Attachment data was null");
+        if (attachmentDto.getId() == 0) throw new IllegalArgumentException("Attachment id should not be zero");
+        if (!attachmentRepository.findById(attachmentDto.getId()).isPresent())
+            throw new DataNotFoundException("Data not found error");
+        if (attachmentRepository.findByFileName(attachmentDto.getFileName()).isPresent())
+            throw new DataDuplicateException("Duplicate fileName error");
+        attachmentRepository.save(modelMapper.map(attachmentDto, Attachment.class));
     }
 
     @Override
     public void delete(Integer id) {
-        AttachmentDto obj = findById(id);
-        if (obj == null) throw new DataNotFoundException("id was not valid");
+        AttachmentDto attachmentDto = findById(id);
+        if (attachmentDto == null) throw new DataNotFoundException("Id was not valid");
         attachmentRepository.deleteById(id);
     }
 }
