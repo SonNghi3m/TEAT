@@ -8,6 +8,6 @@ import java.util.List;
 import java.util.Optional;
 
 public interface EventRepository extends CrudRepository<Event, Integer> {
-    List<Event> findAllByOrOrderByIdDesc();
+//    List<Event> findAllByOrOrderByIdDesc();
     Optional<Event> findByEventName(String eventName);
 }

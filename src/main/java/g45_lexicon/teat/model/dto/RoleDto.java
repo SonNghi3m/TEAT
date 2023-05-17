@@ -13,10 +13,10 @@ public class RoleDto {
     @NotEmpty(message = "roleTitle should not empty")
     @Size(min = 2, max = 20, message = "roleTitle length should be between 2-20")
     private String roleTitle;
-    @NotNull
-    @Valid
-    private Set<UserDto> users;
-    @NotNull
+//    @Valid
+//    private Set<UserDto> users;
+    //@NotNull
     @Valid
     private Set<PermissionDto> permissions;
+
 }

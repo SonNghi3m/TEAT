@@ -1,5 +1,5 @@
 package g45_lexicon.teat.exception;
 
-public class DataDuplicateException extends RuntimeException{
+public class DataDuplicateException extends Exception{
     public DataDuplicateException(String message) {super(message);}
 }

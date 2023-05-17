@@ -15,7 +15,6 @@ public class PermissionDto {
     private String permissionName;
     @NotEmpty(message = "description should not empty")
     private String description;
-    @NotNull
-    @Valid
-    private Set<RoleDto> roles;
+//    @Valid
+//    private Set<RoleDto> roles;
 }

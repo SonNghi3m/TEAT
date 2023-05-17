@@ -7,6 +7,5 @@ import java.util.List;
 import java.util.Optional;
 
 public interface AttachmentRepository extends CrudRepository<Attachment, Integer> {
-    List<Attachment> findAllByOrOrderByIdDesc();
     Optional<Attachment> findByFileName(String fileName);
 }

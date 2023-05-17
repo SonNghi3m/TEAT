@@ -1,5 +1,8 @@
 package g45_lexicon.teat.model.dto;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
 import javax.validation.Valid;
@@ -7,9 +10,11 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
+
 public class UserDto {
     private Integer id;
     @NotEmpty(message = "FirstName should not empty")
@@ -27,13 +32,14 @@ public class UserDto {
     @NotEmpty(message = "Password should not be empty")
     @Size(min = 6, max = 20, message = "Password length should be between 6-20")
     private String password;
-    @NotNull
     @Valid
     private RoleDto role;
-    @NotNull
+    @JsonIgnore
+    @Valid
+    private List<MessageDto> messages;
+    @JsonIgnore
     @Valid
     private List<ConversationDto> conversations;
-    @NotNull
     @Valid
     private List<EventDto> events;
 

@@ -8,6 +8,6 @@ import java.util.List;
 import java.util.Optional;
 
 public interface EmojiRepository extends CrudRepository<Emoji, Integer> {
-    List<Emoji> findAllByOrOrderByIdDesc();
+//    List<Emoji> findAllByOrOrderByIdDesc();
     Optional<Emoji> findByEmojiName(String emojiName);
 }

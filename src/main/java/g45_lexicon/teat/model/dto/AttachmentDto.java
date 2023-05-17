@@ -21,4 +21,8 @@ public class AttachmentDto {
     @Valid
     private List<MessageDto> messages;
 
+    public AttachmentDto(String fileName, String filePath) {
+        this.fileName = fileName;
+        this.filePath = filePath;
+    }
 }
