@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.*;
 import g45_lexicon.teat.model.entity.Attachment;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.validation.Valid;
@@ -31,7 +30,7 @@ public class MessageDto {
     private boolean editedStatus;
     private boolean deletedStatus;
     @UpdateTimestamp
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd hh:mm:ss a")
     private LocalDateTime timestamp;
 
 }

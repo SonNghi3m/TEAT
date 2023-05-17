@@ -3,9 +3,6 @@ package g45_lexicon.teat.service;
 import g45_lexicon.teat.exception.DataDuplicateException;
 import g45_lexicon.teat.exception.DataNotFoundException;
 import g45_lexicon.teat.model.dto.ConversationDto;
-import g45_lexicon.teat.model.dto.MessageDto;
-import g45_lexicon.teat.model.dto.UserDto;
-import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 

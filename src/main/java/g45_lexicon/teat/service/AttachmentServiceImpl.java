@@ -6,7 +6,6 @@ import g45_lexicon.teat.model.dto.AttachmentDto;
 import g45_lexicon.teat.model.entity.Attachment;
 import g45_lexicon.teat.repository.AttachmentRepository;
 import org.modelmapper.ModelMapper;
-import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -61,7 +60,7 @@ public class AttachmentServiceImpl implements AttachmentService{
     @Transactional(rollbackFor = {Exception.class})
     public AttachmentDto update(AttachmentDto attachmentDto) throws DataNotFoundException, DataDuplicateException {
         if (attachmentDto == null) throw new IllegalArgumentException("Attachment data was null");
-        if (attachmentDto.getId() == 0) throw new IllegalArgumentException("Attachment id should not be zero");
+        if (attachmentDto.getId() == null || attachmentDto.getId() == 0) throw new IllegalArgumentException("Attachment id should not be null or zero!");
         if (!attachmentRepository.findById(attachmentDto.getId()).isPresent())
             throw new DataNotFoundException("Data not found error");
         if (attachmentRepository.findByFileName(attachmentDto.getFileName()).isPresent())

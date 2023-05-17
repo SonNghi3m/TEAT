@@ -1,6 +1,5 @@
 package g45_lexicon.teat.repository;
 
-import g45_lexicon.teat.model.entity.Conversation;
 import g45_lexicon.teat.model.entity.Emoji;
 import org.springframework.data.repository.CrudRepository;
 

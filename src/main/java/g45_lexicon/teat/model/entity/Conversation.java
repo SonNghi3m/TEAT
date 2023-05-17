@@ -1,20 +1,15 @@
 package g45_lexicon.teat.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import g45_lexicon.teat.exception.DataDuplicateException;
 import g45_lexicon.teat.exception.DataNotFoundException;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -36,7 +31,7 @@ public class Conversation {
     @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
     private List<Message> messages;
     @CreationTimestamp
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd hh:mm:ss a")
     private LocalDateTime timestamp;
 
     //constructors
@@ -51,7 +46,6 @@ public class Conversation {
         if (participant == null) throw new IllegalArgumentException("Participant was null!");
         if (participants.contains(participant)) throw new DataDuplicateException("Participant exist!");
         participants.add(participant);
-//        participant.addConversation(this);
     }
 
     public void removeParticipant(User participant) throws DataNotFoundException {

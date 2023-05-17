@@ -1,5 +1,6 @@
 package g45_lexicon.teat.model.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
@@ -17,14 +18,15 @@ public class EventDto {
     @NotEmpty(message = "description should not empty")
     private String description;
     @NotNull
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd hh:mm:ss a")
     private LocalDateTime startTime;
     @NotNull
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd hh:mm:ss a")
     private LocalDateTime endTime;
     @NotNull
     @Valid
     private UserDto organizer;
-    @NotNull
-    @Valid
-    private Set<UserDto> attendees;
+//    @Valid
+//    private Set<UserDto> attendees;
 
 }

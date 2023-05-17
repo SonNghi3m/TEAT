@@ -2,18 +2,13 @@ package g45_lexicon.teat.service;
 
 import g45_lexicon.teat.exception.DataDuplicateException;
 import g45_lexicon.teat.exception.DataNotFoundException;
-import g45_lexicon.teat.model.dto.ConversationDto;
-import g45_lexicon.teat.model.dto.RoleDto;
 import g45_lexicon.teat.model.dto.UserDto;
-import g45_lexicon.teat.model.entity.Conversation;
-import g45_lexicon.teat.model.entity.Message;
 import g45_lexicon.teat.model.entity.Role;
 import g45_lexicon.teat.model.entity.User;
 import g45_lexicon.teat.repository.MessageRepository;
 import g45_lexicon.teat.repository.RoleRepository;
 import g45_lexicon.teat.repository.UserRepository;
 import org.modelmapper.ModelMapper;
-import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,8 +24,6 @@ public class UserServiceImpl implements UserService {
     ModelMapper modelMapper;
     RoleRepository roleRepository;
     MessageRepository messageRepository;
-
-
     @Autowired
     public UserServiceImpl(UserRepository userRepository, ModelMapper modelMapper, RoleRepository roleRepository, MessageRepository messageRepository) {
         this.userRepository = userRepository;
@@ -76,7 +69,6 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional(rollbackFor = {Exception.class})
     public UserDto create(UserDto userDto) throws DataDuplicateException, DataNotFoundException {
-
         if (userDto == null) throw new IllegalArgumentException("User was null!");
         if (userDto.getId() != null) throw new IllegalArgumentException("User id should be automatically generated!");
         if (userDto.getFirstName() == null) throw new IllegalArgumentException("Firstname was null!");
@@ -86,10 +78,8 @@ public class UserServiceImpl implements UserService {
         if (userDto.getUsername() == null) throw new IllegalArgumentException("Username was null!");
         if (userRepository.existsByUsername(userDto.getUsername())) throw new DataDuplicateException("Username exists!");
         if (userDto.getPassword() == null) throw new IllegalArgumentException("Password was null!");
-
         Optional<Role> role = roleRepository.findById(userDto.getRole().getId());
         if (!role.isPresent()) throw new DataNotFoundException("Role was not found!");
-
         User createdEntity = userRepository.save(modelMapper.map(userDto, User.class));
         createdEntity.setRole(role.get());
         return modelMapper.map(createdEntity, UserDto.class);
@@ -99,30 +89,19 @@ public class UserServiceImpl implements UserService {
     @Transactional(rollbackFor = {Exception.class})
     public UserDto update(UserDto userDto) throws DataNotFoundException, DataDuplicateException {
         if (userDto == null) throw new IllegalArgumentException("User data was null!");
-        if (userDto.getId() == null) throw new IllegalArgumentException("User id should not be zero or null!");
-        if (!userRepository.findById(userDto.getId()).isPresent())
-            throw new DataNotFoundException("User id was not found!");
-
+        if (userDto.getId() == null || userDto.getId() == 0) throw new IllegalArgumentException("User id should not be zero or null!");
+        if (!userRepository.findById(userDto.getId()).isPresent()) throw new DataNotFoundException("User id was not found!");
         if (userDto.getFirstName() == null) throw new IllegalArgumentException("Firstname was null!");
         if (userDto.getLastName() == null) throw new IllegalArgumentException("Lastname was null!");
         if (userDto.getPassword() == null) throw new IllegalArgumentException("Password was null!");
         if (userDto.getEmail() == null) throw new IllegalArgumentException("Email was null!");
-
         Optional<User> userWithEmail = userRepository.findByEmail(userDto.getEmail());
-        if (userWithEmail.isPresent() && !userWithEmail.get().getId().equals(userDto.getId())) {
-            throw new DataDuplicateException("Email exists!");
-        }
-
+        if (userWithEmail.isPresent() && !userWithEmail.get().getId().equals(userDto.getId())) throw new DataDuplicateException("Email exists!");
         if (userDto.getUsername() == null) throw new IllegalArgumentException("Username was null!");
         Optional<User> userWithUsername = userRepository.findByUsername(userDto.getUsername());
-        if (userWithUsername.isPresent() && !userWithUsername.get().getId().equals(userDto.getId())) {
-            throw new DataDuplicateException("Username exists!");
-        }
-
-
+        if (userWithUsername.isPresent() && !userWithUsername.get().getId().equals(userDto.getId())) throw new DataDuplicateException("Username exists!");
         if (userDto.getRole() == null) throw new IllegalArgumentException("Role was null!");
         if (!roleRepository.existsById(userDto.getRole().getId())) throw new DataNotFoundException("Role was not found!");
-
         User result = userRepository.save(modelMapper.map(userDto, User.class));
         return modelMapper.map(result, UserDto.class);
     }
@@ -151,21 +130,4 @@ public class UserServiceImpl implements UserService {
         userRepository.deleteByEmail(email);
     }
 
-//    @Override
-//    public UserDto addMessage(Integer userId, Integer messageId) throws DataNotFoundException, DataDuplicateException {
-//        if (messageId == null) throw new IllegalArgumentException("Message id was null!");
-//        if (userId == null) throw new IllegalArgumentException("User id was null!");
-//        Optional<User> optionalUser = userRepository.findById(userId);
-//        if (!optionalUser.isPresent()) throw new DataNotFoundException("User was not found!");
-//        Optional<Message> optionalMessage = messageRepository.findById(messageId);
-//        if (!optionalMessage.isPresent()) throw new DataNotFoundException("Message was not found!");
-//        User user = optionalUser.get();
-//        Message message = optionalMessage.get();
-//        if (!user.equals(message.getSender())) throw new DataNotFoundException("User and message sender are not the same!");
-//        user.addMessage(message);
-//
-//        userRepository.save(user);
-//        //todo: how to notifyAll() here?
-//        return modelMapper.map(user, UserDto.class);
-//    }
 }

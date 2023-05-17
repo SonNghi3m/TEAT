@@ -3,7 +3,6 @@ package g45_lexicon.teat.controller;
 import g45_lexicon.teat.exception.DataDuplicateException;
 import g45_lexicon.teat.exception.DataNotFoundException;
 import g45_lexicon.teat.model.dto.AttachmentDto;
-import g45_lexicon.teat.model.entity.Attachment;
 import g45_lexicon.teat.service.AttachmentService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +12,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController

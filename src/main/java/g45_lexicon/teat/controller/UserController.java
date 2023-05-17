@@ -2,9 +2,7 @@ package g45_lexicon.teat.controller;
 
 import g45_lexicon.teat.exception.DataDuplicateException;
 import g45_lexicon.teat.exception.DataNotFoundException;
-import g45_lexicon.teat.model.dto.ConversationDto;
 import g45_lexicon.teat.model.dto.UserDto;
-import g45_lexicon.teat.model.entity.User;
 import g45_lexicon.teat.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,16 +52,6 @@ public class UserController {
         System.out.println("userDto = " + userDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(userService.create(userDto));
     }
-
-    //todo: change default role operation
-
-//    @Operation(summary = "Add a message to a user")
-//    @PostMapping("/{userId}/message/{messageId}")
-//    public ResponseEntity<UserDto> addMessage(
-//            @PathVariable("userId") Integer userId,
-//            @PathVariable("messageId") Integer messageId) throws DataNotFoundException, DataDuplicateException {
-//        return ResponseEntity.status(HttpStatus.CREATED).body(userService.addMessage(userId, messageId));
-//    }
 
     @Operation(summary = "Update user data")
     @PutMapping

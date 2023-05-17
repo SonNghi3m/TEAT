@@ -1,9 +1,6 @@
 package g45_lexicon.teat.model.dto;
 
 import lombok.Data;
-import lombok.NoArgsConstructor;
-
-import javax.persistence.*;
 import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
