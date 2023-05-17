@@ -2,15 +2,10 @@ package g45_lexicon.teat.service;
 
 import g45_lexicon.teat.exception.DataDuplicateException;
 import g45_lexicon.teat.exception.DataNotFoundException;
-import g45_lexicon.teat.model.dto.PermissionDto;
 import g45_lexicon.teat.model.dto.RoleDto;
-import g45_lexicon.teat.model.dto.UserDto;
-import g45_lexicon.teat.model.entity.Permission;
 import g45_lexicon.teat.model.entity.Role;
-import g45_lexicon.teat.model.entity.User;
 import g45_lexicon.teat.repository.RoleRepository;
 import org.modelmapper.ModelMapper;
-import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -66,7 +61,7 @@ public class RoleServiceImpl implements RoleService {
     @Transactional(rollbackFor = {Exception.class})
     public RoleDto update(RoleDto roleDto) throws DataNotFoundException, DataDuplicateException {
         if (roleDto == null) throw new IllegalArgumentException("Role data was null!");
-        if (roleDto.getId() == null) throw new IllegalArgumentException("Role id need to be indicated!");
+        if (roleDto.getId() == null || roleDto.getId() == 0) throw new IllegalArgumentException("Role id should not be null or zero!");
         if (!roleRepository.findById(roleDto.getId()).isPresent()) throw new DataNotFoundException("Role id was not found!");
         Role result = roleRepository.save(modelMapper.map(roleDto, Role.class));
         return modelMapper.map(result, RoleDto.class);

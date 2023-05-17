@@ -7,10 +7,10 @@ import g45_lexicon.teat.model.dto.EventDto;
 import java.util.List;
 
 public interface EventService {
-//    List<EventDto> getAll();
+    List<EventDto> getAll();
     EventDto findById(Integer id) throws DataNotFoundException;
-    EventDto findByName(String name) throws DataNotFoundException;
-    EventDto create(EventDto obj) throws DataDuplicateException;
-    EventDto update(EventDto obj) throws DataNotFoundException, DataDuplicateException;
+    List<EventDto> findByName(String name) throws DataNotFoundException;
+    EventDto create(EventDto eventDto) throws DataDuplicateException;
+    EventDto update(EventDto eventDto) throws DataNotFoundException, DataDuplicateException;
     void delete(Integer id) throws DataNotFoundException;
 }

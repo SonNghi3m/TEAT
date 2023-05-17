@@ -60,7 +60,7 @@ public class EmojiServiceImpl implements EmojiService {
     @Transactional(rollbackFor = {Exception.class})
     public EmojiDto update(EmojiDto emojiDto) throws DataNotFoundException, DataDuplicateException {
         if (emojiDto == null) throw new IllegalArgumentException("Emoji data was null");
-        if (emojiDto.getId() == 0) throw new IllegalArgumentException("Emoji id should not be zero");
+        if (emojiDto.getId() == null || emojiDto.getId() == 0 ) throw new IllegalArgumentException("Emoji id should not be null or zero!");
         if (!emojiRepository.findById(emojiDto.getId()).isPresent())
             throw new DataNotFoundException("Data not found error");
         if (emojiRepository.findByEmojiName(emojiDto.getEmojiName()).isPresent())

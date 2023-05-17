@@ -1,15 +1,9 @@
 package g45_lexicon.teat.model.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import g45_lexicon.teat.exception.DataDuplicateException;
-import g45_lexicon.teat.exception.DataNotFoundException;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -42,13 +36,13 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "conversation_id")
     )
     private List<Conversation> conversations;
-    @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.REFRESH})
-    @JoinTable(
-            name = "events_attendees",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "event_id")
-    )
-    private List<Event> events;
+//    @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.REFRESH})
+//    @JoinTable(
+//            name = "events_attendees",
+//            joinColumns = @JoinColumn(name = "user_id"),
+//            inverseJoinColumns = @JoinColumn(name = "event_id")
+//    )
+//    private List<Event> events;
 
     //constructors
     public User(String firstName, String lastName, String email, String username, String password, Role role) {
@@ -61,17 +55,17 @@ public class User {
     }
 
     //    methods
-    public void addEvent(Event event) throws DataDuplicateException {
-        if (event == null) throw new IllegalArgumentException("Event was null!");
-        if (events.contains(event)) throw new DataDuplicateException("Event exist!");
-        events.add(event);
-    }
-
-    public void removeEvent(Event event) throws DataNotFoundException {
-        if (event == null) throw new IllegalArgumentException("Conversation was null!");
-        if (!events.contains(event)) throw new DataNotFoundException("Conversation does not exist!");
-        events.remove(event);
-    }
+//    public void addEvent(Event event) throws DataDuplicateException {
+//        if (event == null) throw new IllegalArgumentException("Event was null!");
+//        if (events.contains(event)) throw new DataDuplicateException("Event exist!");
+//        events.add(event);
+//    }
+//
+//    public void removeEvent(Event event) throws DataNotFoundException {
+//        if (event == null) throw new IllegalArgumentException("Conversation was null!");
+//        if (!events.contains(event)) throw new DataNotFoundException("Conversation does not exist!");
+//        events.remove(event);
+//    }
 //    public void addConversation(Conversation conversation) throws DataDuplicateException {
 //        if (conversation == null) throw new IllegalArgumentException("Conversation was null!");
 //        if (conversations.contains(conversation)) throw new DataDuplicateException("Conversation exist!");

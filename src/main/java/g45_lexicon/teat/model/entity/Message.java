@@ -1,13 +1,9 @@
 package g45_lexicon.teat.model.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import g45_lexicon.teat.exception.DataDuplicateException;
 import g45_lexicon.teat.exception.DataNotFoundException;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
@@ -40,8 +36,6 @@ public class Message {
             inverseJoinColumns = @JoinColumn(name = "attachment_id")
     )
     private List<Attachment> attachments;
-//    @JsonIgnoreProperties//("conversation")
-//    @JsonBackReference("conversation")
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
     @JoinColumn(name = "conversation_id")
     private Conversation conversation;
@@ -50,7 +44,7 @@ public class Message {
     @Column(nullable = false)
     private boolean deletedStatus;
     @UpdateTimestamp
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd hh:mm:ss a")
     private LocalDateTime timestamp;
 
     //constructors
@@ -66,7 +60,6 @@ public class Message {
     }
 
     public Message(Integer id, User sender, String textContent, List<Emoji> emojis, List<Attachment> attachments, Conversation conversation) {
-//    public Message(Integer id, User sender, String textContent, List<Emoji> emojis, List<Attachment> attachments) {
         this.id = id;
         this.sender = sender;
         this.textContent = textContent;

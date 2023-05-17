@@ -11,7 +11,7 @@ public class APIError {
 
     private HttpStatus status;
     private String statusText;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd hh:mm:ss")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd hh:mm:ss a")
     private LocalDateTime timestamp;
 
     public APIError() {

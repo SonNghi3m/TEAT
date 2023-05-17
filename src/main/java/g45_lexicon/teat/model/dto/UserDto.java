@@ -1,16 +1,12 @@
 package g45_lexicon.teat.model.dto;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -40,8 +36,8 @@ public class UserDto {
     @JsonIgnore
     @Valid
     private List<ConversationDto> conversations;
-    @Valid
-    private List<EventDto> events;
-
+//    @JsonIgnore
+//    @Valid
+//    private List<EventDto> events;
 }
 

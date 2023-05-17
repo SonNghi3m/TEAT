@@ -18,9 +18,7 @@ public class Role {
     private Integer id;
     @Column(nullable = false, length = 50)
     private String roleTitle;
-//    @OneToMany(cascade = CascadeType.ALL,
-//                mappedBy = "role")
-//    private Set<User> users;
+
     @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.REFRESH})
     @JoinTable(name = "roles_permissions",
                 joinColumns = @JoinColumn(name = "role_id"),
@@ -34,14 +32,6 @@ public class Role {
     }
 
     //methods
-//    public void addUser(User user) {
-//        if (user != null && !users.contains(user)) users.add(user);
-//    }
-//    public void removeUser(User user) {
-//
-//        if (user != null && users.contains(user)) users.remove(user);
-//    }
-
     public void addPermission(Permission permission) throws DataDuplicateException {
         if (permission == null) throw new IllegalArgumentException("Permission was null!");
         if (permissions.contains(permission)) throw new DataDuplicateException("Permission exists!");

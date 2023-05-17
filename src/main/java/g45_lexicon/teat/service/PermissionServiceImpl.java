@@ -2,13 +2,10 @@ package g45_lexicon.teat.service;
 
 import g45_lexicon.teat.exception.DataDuplicateException;
 import g45_lexicon.teat.exception.DataNotFoundException;
-import g45_lexicon.teat.model.dto.AttachmentDto;
 import g45_lexicon.teat.model.dto.PermissionDto;
-import g45_lexicon.teat.model.entity.Attachment;
 import g45_lexicon.teat.model.entity.Permission;
 import g45_lexicon.teat.repository.PermissionRepository;
 import org.modelmapper.ModelMapper;
-import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -64,7 +61,7 @@ public class PermissionServiceImpl implements PermissionService {
     @Transactional(rollbackFor = {Exception.class})
     public PermissionDto update(PermissionDto permissionDto) throws DataNotFoundException {
         if (permissionDto == null) throw new IllegalArgumentException("Permission data was null!");
-        if (permissionDto.getId() == null) throw new IllegalArgumentException("Permission id need to be indicated!");
+        if (permissionDto.getId() == null || permissionDto.getId() == 0) throw new IllegalArgumentException("Permission id should not be null or zero!");
         if (!permissionRepository.findById(permissionDto.getId()).isPresent()) throw new DataNotFoundException("Permission id was not found!");
         Permission result = permissionRepository.save(modelMapper.map(permissionDto, Permission.class));
         return modelMapper.map(result, PermissionDto.class);

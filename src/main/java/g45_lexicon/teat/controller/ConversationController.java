@@ -3,8 +3,6 @@ package g45_lexicon.teat.controller;
 import g45_lexicon.teat.exception.DataDuplicateException;
 import g45_lexicon.teat.exception.DataNotFoundException;
 import g45_lexicon.teat.model.dto.ConversationDto;
-import g45_lexicon.teat.model.dto.MessageDto;
-import g45_lexicon.teat.model.dto.UserDto;
 import g45_lexicon.teat.service.ConversationService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
