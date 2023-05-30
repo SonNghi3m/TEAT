@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,8 +20,16 @@ import java.util.List;
 @RequestMapping("/api/v1/message/")
  //http://localhost:8080/api/v1/message/
 public class MessageController {
+//    @Autowired
+//    MessageService messageService;
+    private final MessageService messageService;
+    private final SimpMessagingTemplate messagingTemplate;
+
     @Autowired
-    MessageService messageService;
+    public MessageController(MessageService messageService, SimpMessagingTemplate messagingTemplate) {
+        this.messageService = messageService;
+        this.messagingTemplate = messagingTemplate;
+    }
     @Operation(summary = "Find all messages")
     @GetMapping
     public ResponseEntity<List<MessageDto>> getAll() {
@@ -39,11 +48,22 @@ public class MessageController {
         return ResponseEntity.status(HttpStatus.OK).body(messageService.findBySender(username));
     }
 
+//    @Operation(summary = "Create new message")
+//    @PostMapping
+//    public ResponseEntity<MessageDto> create(@RequestBody @Valid MessageDto messageDto) throws DataDuplicateException, DataNotFoundException {
+//        System.out.println("messageDto = " + messageDto);
+//        return ResponseEntity.status(HttpStatus.CREATED).body(messageService.create(messageDto));
+//    }
+
     @Operation(summary = "Create new message")
     @PostMapping
     public ResponseEntity<MessageDto> create(@RequestBody @Valid MessageDto messageDto) throws DataDuplicateException, DataNotFoundException {
-        System.out.println("messageDto = " + messageDto);
-        return ResponseEntity.status(HttpStatus.CREATED).body(messageService.create(messageDto));
+        MessageDto createdMessage = messageService.create(messageDto);
+
+        // Send the created message to subscribers
+        messagingTemplate.convertAndSend("/topic/messages", createdMessage);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdMessage);
     }
 
     @Operation(summary = "Update message")
