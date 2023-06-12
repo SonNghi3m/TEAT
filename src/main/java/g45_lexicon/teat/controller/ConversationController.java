@@ -4,10 +4,13 @@ import g45_lexicon.teat.exception.DataDuplicateException;
 import g45_lexicon.teat.exception.DataNotFoundException;
 import g45_lexicon.teat.model.dto.ConversationDto;
 import g45_lexicon.teat.service.ConversationService;
+import g45_lexicon.teat.service.MessageService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,8 +24,16 @@ import java.util.List;
 @RequestMapping("/api/v1/conversation/")
 // http://localhost:8080/api/v1/conversation/
 public class ConversationController {
-    @Autowired
     ConversationService conversationService;
+    MessageService messageService;
+    SimpMessagingTemplate messagingTemplate;
+
+    @Autowired
+    public ConversationController( ConversationService conversationService, MessageService messageService, SimpMessagingTemplate messagingTemplate) {
+        this.conversationService = conversationService;
+        this.messageService = messageService;
+        this.messagingTemplate = messagingTemplate;
+    }
     @Operation(summary = "Find all conversations")
     @GetMapping
     public ResponseEntity<List<ConversationDto>> getAll() {
@@ -49,10 +60,12 @@ public class ConversationController {
     }
 
     @Operation(summary = "Add a message to a conversation")
+    @MessageMapping("/{conversationId}/messages") // endpoint on server which the msg will be sent
     @PostMapping("/{conversationId}/message/{messageId}")
     public ResponseEntity<ConversationDto> addMessage(
             @PathVariable("conversationId") Integer conversationId,
             @PathVariable("messageId") Integer messageId) throws DataNotFoundException, DataDuplicateException {
+        messagingTemplate.convertAndSend("/conversation/" + conversationId + "/participants", messageService.findById(messageId));  // Send the message to all participants in the conversation
         return ResponseEntity.status(HttpStatus.CREATED).body(conversationService.addMessage(conversationId, messageId));
     }
 
