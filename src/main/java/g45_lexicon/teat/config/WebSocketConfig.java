@@ -13,7 +13,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     @Override
     public void configureMessageBroker(MessageBrokerRegistry registry) {
         // Configure the message broker
-        registry.enableSimpleBroker("/conversation/" + conversationId + "/participants"); //  messages sent to destinations prefixed with /conversation will be broadcasted to subscribers.
+//        registry.enableSimpleBroker("/conversation/" + conversationId + "/participants"); //  messages sent to destinations prefixed with /conversation will be broadcasted to subscribers.
 //        registry.setApplicationDestinationPrefixes("/app");
     }
 
