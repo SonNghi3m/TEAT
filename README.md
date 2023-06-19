@@ -37,3 +37,5 @@ NOTE: Using Spring websocket.
 - Adding emojis
 - Send/receive attachments.
 - Add/Remove attendees for an event/meeting schedule.
+
+- Github link to the project: https://github.com/SonNghi3m/TEAT.git
